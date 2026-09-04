@@ -1,29 +1,25 @@
-# Blinkit — Inventory Replenishment Priority Analysis (SQL)
+# Blinkit — Inventory Replenishment & Stock-Risk Analysis (SQL)
 
 ## Objective
-Answer the operational question a dark-store/quick-commerce ops team asks every morning: "What do we need to order today?" — by scoring SKUs on stockout risk, reorder thresholds, and revenue exposure.
+Turn a daily dark-store inventory snapshot into the decisions a quick-commerce ops team makes every morning: what's running dry, where the money is exposed, what's about to spoil, and exactly what to reorder today.
 
-## Approach
-A single SQL query joins inventory, SKU, and dark-store tables and builds a weighted **replenishment priority score** per SKU per store, combining:
-- Whether the item is currently out of stock (highest weight)
-- Whether it's below its reorder point
-- Whether it's perishable
-- Days since last restock
-- Potential revenue at risk if the item stays unavailable
+## Dataset
+Three related tables:
+- `inventory` — per-SKU, per-store daily snapshot (quantity available, reorder point/quantity, last restock, snapshot date)
+- `skus` — product master (name, category, perishable flag, cost price, MRP)
+- `dark_stores` — store master (name, city)
 
-Each SKU is also tagged with an urgency label:
-- Order Immediately — out of stock
-- Order Today — below reorder point
-- Can Wait — healthy stock level
-
-## Output
-A ranked, store-level list of the top 20 SKUs to reorder today, with quantity to order, reorder cost, and potential revenue if restocked in time.
+## Analysis (4 queries)
+1. **Stockout rate by category** — which product categories are running dry, and how many SKUs sit below their reorder point.
+2. **Revenue at risk by store** — the rupee exposure from under-stocked items at each dark store, so the highest-value gaps get attention first.
+3. **Perishable ageing / spoilage risk** — perishable SKUs restocked over a week ago that still hold stock above reorder point: capital tied up and likely to be written off.
+4. **Replenishment priority score** — a weighted score per SKU (stockout, below reorder point, perishability, days since restock, revenue at risk) producing a ranked "order today" list with an urgency label.
 
 ## Business Value
-Turns raw inventory snapshots into a prioritized, actionable reorder list — reducing stockouts on high-revenue and perishable items without requiring manual review of every SKU/store combination.
+Converts a raw inventory snapshot into a prioritised, financially-aware reorder workflow — surfacing stockouts on high-revenue and perishable items, quantifying exposure by store, and flagging waste risk, without manually reviewing every SKU/store combination.
 
 ## Files
-- `Blinkit.sql` — full replenishment priority query
+- `Blinkit.sql` — all four analytical queries
 
 ## Tools
-SQL
+SQL (MySQL)

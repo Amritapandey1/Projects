@@ -5,7 +5,6 @@ A portfolio of business analysis, data analytics, and automation projects.
 | Project | Focus | Tools |
 |---|---|---|
 | [Telecom Revenue Leakage](./01-telecom-revenue-leakage) | Billing anomaly detection & revenue-at-risk quantification | SQL, Excel, Power BI |
-| [Netflix Content Analysis](./04-netflix-content-analysis) | Content performance & investment strategy | Power BI, Excel/CSV |
 | [Blinkit Inventory Priority](./05-blinkit-inventory-priority) | Replenishment priority scoring | SQL |
 | [Titan Complaint Automation](./06-titan-complaint-automation) | End-to-end after-sales complaint triage workflow | n8n, Gmail, Google Sheets, JavaScript |
 | [Target India Market Entry](./07-target-india-market-entry) | Retail market-entry strategy research | Market research, competitive analysis |
